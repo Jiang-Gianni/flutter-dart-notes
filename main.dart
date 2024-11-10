@@ -1,19 +1,19 @@
-import 'dart:io';
-import 'dart:isolate';
+const numDays = 7;
 
-main() async {
-  var isolate = await Isolate.spawn(hello, "world");
-  print(isolate);
-  var isolate2 = await Isolate.spawn(hello, "galaxy");
-  print(isolate2);
+class DaysLeftInWeek {
+  int currentDay = 0;
 
-  isolate.kill(priority: Isolate.immediate);
-  // isolate2.kill(priority: Isolate.beforeNextEvent);
-  print("pre sleep");
-  sleep(Duration(seconds: 5));
+  DaysLeftInWeek() {
+    currentDay = DateTime.now().weekday.toInt();
+  }
+
+  int howManyDaysLeft() {
+    return numDays - currentDay;
+  }
 }
 
-void hello(String value) {
-  sleep(Duration(seconds: 3));
-  print("Hello ${value}");
+main() {
+  var a = new DaysLeftInWeek();
+  print(a.howManyDaysLeft());
+  print(a.currentDay);
 }
